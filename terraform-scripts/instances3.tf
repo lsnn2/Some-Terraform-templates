@@ -3,26 +3,26 @@ resource "aws_key_pair" "jenkins-key" {
   public_key = file("id_rsa.pub")
 }
 
-resource "aws_instance" "jenkins-inst" {
+resource "aws_instance" "nexus-instance" {
   ami                    = var.AMIS[var.REGION]
   instance_type          = "t2.micro"
   availability_zone      = var.ZONE1
   key_name               = aws_key_pair.jenkins-key.key_name
   vpc_security_group_ids = ["sg-0571d188fac48640b"]
   tags = {
-    Name    = "Jenkins-instance"
-    Project = "Jenkins"
+    Name    = "Nexus-instance"
+    Project = "CICD"
   }
 
   provisioner "file" {
-    source      = "web.sh"
-    destination = "/tmp/web.sh"
+    source      = "nexus-setup.sh"
+    destination = "/tmp/nexus-setup"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "chmod u+x /tmp/web.sh"
-      , "sudo /tmp/web.sh"
+      "chmod u+x /tmp/nexus-setup.sh"
+      , "sudo /tmp/nexus-setup"
     ]
 
   }

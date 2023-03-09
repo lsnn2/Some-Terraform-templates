@@ -15,16 +15,27 @@ variable "ZONE3" {
 }
 
 variable "AMIS" {
-  type = map(any)
+  type = map
   default = {
-    us-east-1 = "ami-006dcf34c09e50022"
+    "centos_7"       = "ami-002070d43b0a4f171"
+    "ubuntu_18_04" = "ami-0263e4deb427da90e"
+    "ubuntu_20_04" = "ami-09cd747c78a9add63"
+
   }
 }
 
 variable "USER" {
-  default = "ec2-user"
+  type = map
+  default = {
+    "centos" = "centos"
+    "ubuntu" = "ubuntu"
+  }
 }
 
 variable "MYIP" {
   default = "13.41.87.223/32"
+}
+
+variable "VPCID" {
+  default = "vpc-0927e8e29721bc9eb"
 }
